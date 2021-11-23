@@ -6,7 +6,8 @@
 //
 
 #include <PayOff1.h>
-#include <MinMax.h>
+//#include <MinMax.h>
+#include <minmax.h>
 
 PayOff::PayOff(double Strike_, OptionType TheOptionsType_)
 :
