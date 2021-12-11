@@ -4,6 +4,7 @@ which is used for pricing convertible bond
 
 
 ------------------------------------------------------compile command------------------------------------------------------
+
 g++ main/helloworld.cpp src/dataStructure.cpp -I include/ -o hello
 
 g++ main/helloworld.cpp src/myClass.cpp  -I include/ -o hello
