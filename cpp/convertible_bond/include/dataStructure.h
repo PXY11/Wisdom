@@ -8,7 +8,9 @@
 
 
 #define NOMINMAX
+/*no use
 #include <Windows.h>
+*/
 //#define NOMINMAX告诉编译器(或实际上是预处理器)跳过min和max的定义,但只有在#include "windows.h"之前执行此操作时才会应用它。
 
 #include <algorithm>//C++标准库：包含了所有vector、list、set、map操作能想到的一些函数,如查找,替换、排序、计数等常用的功能全部在里面
