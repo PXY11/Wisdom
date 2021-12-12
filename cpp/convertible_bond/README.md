@@ -14,3 +14,5 @@ g++ main/testJson.cpp ./lib_json/*.cpp -I ./ -o testJson
 g++ main/testReadJsonFile.cpp ./lib_json/*.cpp -I ./ -o testReadJsonFile
 
 g++ main/testCBP.cpp src/Parameter.cpp lib_json/*.cpp -I ./ -I include/ -o testCBP
+
+g
