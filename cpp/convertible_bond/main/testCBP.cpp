@@ -1,11 +1,13 @@
 #include<iostream>
 #include<vector>
-#include<myClass.h>
+#include<Parameter.h>
 //#include<dataStructure.h>
 using namespace std;
 
 int main(){
-    Parameter param(0.5);
+    Parameter param(1);
+    param.readParam();
+    param.calParam();
     param.show();
     return 0;
 }

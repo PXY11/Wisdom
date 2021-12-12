@@ -8,5 +8,6 @@
         "partner_age":21,  
         "partner_sex_is_male":false  
     },  
-    "achievement":["ach1","ach2","ach3"]  
+    "achievement":["ach1","ach2","ach3","happy"] , 
+    "numberArr":[11,12,13]
 }  

@@ -4,13 +4,12 @@ which is used for pricing convertible bond
 
 
 ------------------------------------------------------Compile Command------------------------------------------------------
+First change directory to the convertible_bond
 
-g++ main/helloworld.cpp src/dataStructure.cpp -I include/ -o hello
-
-g++ main/helloworld.cpp src/myClass.cpp  -I include/ -o hello
-
-g++ main/testCBP.cpp src/myClass.cpp -I include/ -o testCBP
+Then copy the following commands to terminal to compile
 
 g++ main/testJson.cpp ./lib_json/*.cpp -I ./ -o testJson
 
 g++ main/testReadJsonFile.cpp ./lib_json/*.cpp -I ./ -o testReadJsonFile
+
+g++ main/testCBP.cpp src/Parameter.cpp lib_json/*.cpp -I ./ -I include/ -o testCBP

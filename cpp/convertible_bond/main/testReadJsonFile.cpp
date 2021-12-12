@@ -35,7 +35,7 @@ void readFileJson()
     Json::Reader reader;
     Json::Value root;
 
-    ifstream in("parameters/test.json",ios::binary);
+    ifstream in("param_setting/MikeJiang.json",ios::binary);
 
     if(!in.is_open()){
         cout<<"Error opening"<<endl;
