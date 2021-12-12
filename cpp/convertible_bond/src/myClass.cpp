@@ -10,4 +10,6 @@ Parameter::Parameter(double T)
 void Parameter::show()
 {
     cout<<"The value of T is:"<<this->T<<endl;
+    cout<<"The value of Nt is:"<<this->Nt<<endl;
 }
+

@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(){
-    Parameter param(9.0);
+    Parameter param(0.5);
     param.show();
     return 0;
 }
