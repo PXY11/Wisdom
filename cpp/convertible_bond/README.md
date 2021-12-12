@@ -4,6 +4,7 @@ which is used for pricing convertible bond
 
 
 ------------------------------------------------------Compile Command------------------------------------------------------
+
 First change directory to the convertible_bond
 
 Then copy the following commands to terminal to compile
