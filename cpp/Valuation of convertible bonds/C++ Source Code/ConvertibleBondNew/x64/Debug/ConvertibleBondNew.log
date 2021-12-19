@@ -1,0 +1,20 @@
+﻿  ConvertibleBondPDE.cpp
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(98): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(219): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(379): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(382): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(387): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(389): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(390): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(392): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(395): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(443): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(564): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(726): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(729): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(734): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(836): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(856): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+c:\users\rmiwuc\documents\visual studio 2017\projects\convertiblebondnew\convertiblebondnew\convertiblebondpde.cpp(814): warning C4101: 'value': unreferenced local variable
+  ConvertibleBondNew.vcxproj -> C:\Users\RMIWUC\documents\visual studio 2017\Projects\ConvertibleBondNew\x64\Debug\ConvertibleBondNew.exe
+  ConvertibleBondNew.vcxproj -> C:\Users\RMIWUC\documents\visual studio 2017\Projects\ConvertibleBondNew\x64\Debug\ConvertibleBondNew.pdb (Partial PDB)

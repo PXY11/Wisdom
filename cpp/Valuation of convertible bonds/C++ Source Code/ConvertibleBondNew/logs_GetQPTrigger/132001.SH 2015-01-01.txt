@@ -1,0 +1,30 @@
+**************************************************
+***         start GetQPTrigger(...)            ***
+**************************************************
+   Define objective function ...
+   Define objective function success ...
+   Start root bracketing ...
+   Initial interval: (11.2593,112.593)
+        Monte Carlo is running: QPTrigger - Case 2
+        Monte Carlo is running: QPTrigger - Case 2
+   Root exists in initial interval ...
+   Start brent root solver ...
+        Monte Carlo is running: QPTrigger - Case 2
+        Monte Carlo is running: QPTrigger - Case 2
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (112.593, 112.593)
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (112.593, 61.9259)
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (112.593, 104.148)
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (104.148, 83.037)
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (83.037, 72.4815)
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (72.4815, 67.2037)
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (67.2037, 64.5648)
+        Monte Carlo is running: QPTrigger - Case 2
+       (a, b) = (64.5648, 63.2454)
+   Finding QPTrigger successed! QPTrigger = 63.2454

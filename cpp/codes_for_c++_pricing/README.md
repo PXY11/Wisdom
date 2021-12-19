@@ -14,6 +14,3 @@ g++  mains/SimpleMCMain4.cpp  source/Random1.cpp source/PayOff2.cpp source/Simpl
 
 [SimpleMCMain5.cpp]
 g++  mains/SimpleMCMain5.cpp  source/Random1.cpp source/PayOff2.cpp source/SimpleMC2.cpp source/DoubleDigital.cpp -I include/ -o SimpleMCMain5 -g -Og
-
-[SimpleMCMain5.cpp]
-g++  mains/SimpleMCMain5.cpp source/DoubleDigital.cpp -I include/ -o SimpleMCMain5 -g -Og

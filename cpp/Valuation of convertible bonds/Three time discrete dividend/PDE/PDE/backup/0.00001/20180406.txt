@@ -1,0 +1,118 @@
+Mean method 
+S0 = 7.334400
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 83.012616 
+Bond Value: 131.102681 
+Probability method 
+S0 = 7.334400
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 2201.035909 
+Bond Value: 130.579636 
+Mean method 
+S0 = 7.449000
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 78.858240 
+Bond Value: 132.685784 
+Probability method 
+S0 = 7.449000
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 2113.057915 
+Bond Value: 131.826251 
+Mean method 
+S0 = 7.563600
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 78.219873 
+Bond Value: 134.205792 
+Probability method 
+S0 = 7.563600
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 2630.386664 
+Bond Value: 133.192582 
+Mean method 
+S0 = 3.896400
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 75.256825 
+Bond Value: 97.314922 
+Probability method 
+S0 = 3.896400
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 77475.030647 
+Bond Value: 93.693095 
+Mean method 
+S0 = 4.011000
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000
+Total elapsed time: 93.527146 
+Bond Value: 98.030592 
+Probability method 
+S0 = 4.011000
+T = 5.700000
+D1 = 0.300000
+D2 = 0.300000
+D3 = 0.300000
+D1_time = 1.000000
+D2_time = 3.000000
+D3_time = 5.000000
+sigma = 0.200000

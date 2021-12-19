@@ -1,0 +1,23 @@
+﻿  ConvertibleBondPDE.cpp
+ConvertibleBondPDE.cpp(119): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+ConvertibleBondPDE.cpp(251): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(378): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(381): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(386): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(388): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(389): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(391): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(394): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(445): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+ConvertibleBondPDE.cpp(577): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(752): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(755): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(760): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+ConvertibleBondPDE.cpp(833): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+ConvertibleBondPDE.cpp(778): warning C4101: 'value': unreferenced local variable
+  Generating code
+  2 of 311 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    8 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  ConvertibleBondNew.vcxproj -> C:\Users\RMIWUC\documents\visual studio 2017\Projects\ConvertibleBondNew\x64\Release\ConvertibleBondNew.exe

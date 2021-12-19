@@ -1,0 +1,9 @@
+**************************************************
+***         start GetQCTrigger(...)            ***
+**************************************************
+   Define objective function ...
+   Define objective function success ...
+   Start root bracketing ...
+   Initial interval: (112.593,1125.93)
+        Monte Carlo is running: QCTrigger - Case 2
+        Monte Carlo is running: QCTrigger - Case 2

@@ -1,0 +1,6 @@
+bond value:136.54
+delta:0.689417
+gamma:0.279432
+theta:0
+rho:-0.260116
+vega:0.031752
