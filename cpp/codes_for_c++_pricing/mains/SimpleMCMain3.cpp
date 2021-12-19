@@ -62,6 +62,7 @@ int main()
                                     << resultPut << " for the put\n";
 
     double tmp;
+	cout<<endl<<"enter any character to quit:";
     cin >> tmp;
 
 	return 0;
