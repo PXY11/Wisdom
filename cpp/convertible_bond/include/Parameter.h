@@ -14,7 +14,7 @@ public:
     void setBoundaryParam();
     ~Parameter(){}
 
-private:
+//private:
     int version;
     double T;
     double Nt; //calculated

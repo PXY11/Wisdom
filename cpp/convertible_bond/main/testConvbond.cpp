@@ -6,13 +6,29 @@
 using namespace std;
 
 int main(){
+    /*
     Parameter param(1);
     param.readParam();
     param.calParam();
     param.setBoundaryParam();
     param.show();
+    */
     PDESolver pdesolver(1);
     pdesolver.set_iter(9);
     pdesolver.show_iter();
+    Parameter* param_ptr;
+    param_ptr = pdesolver.get_pde_param_ptr();
+
+    pdesolver.pde_param_ptr->readParam();
+    pdesolver.pde_param_ptr->calParam();
+    pdesolver.pde_param_ptr->setBoundaryParam();
+    pdesolver.pde_param_ptr->show();
+    cout<<pdesolver.pde_param_ptr->rhopenltycall;
+/*
+    pde_param_ptr->readParam();
+    pde_param_ptr->calParam();
+    pde_param_ptr->setBoundaryParam();
+    pde_param_ptr->show();
+    */
     return 0;
 }

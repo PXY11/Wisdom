@@ -166,7 +166,7 @@ void Parameter::setBoundaryParam()
         B.push_back(tmp);
     }
 
-    cout<<"***"<<this->u[0]<<"***"<<endl;
-    cout<<"***"<<this->u[this->S.size()-1]<<"***";
+    //cout<<"***"<<this->u[0]<<"***"<<endl;
+    //cout<<"***"<<this->u[this->S.size()-1]<<"***";
 
 }
