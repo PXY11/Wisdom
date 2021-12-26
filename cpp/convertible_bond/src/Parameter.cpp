@@ -27,6 +27,7 @@ void Parameter::show()
     cout<<"The length of no_put_time is:"<<this->no_put_time.size()<<endl;
     cout<<"The length of no_convert_time is:"<<this->no_convert_time.size()<<endl;
     cout<<"The value of Bc_star is:"<<this->Bc_star<<endl;
+    cout<<"The value of Bp_star is:"<<this->Bp_star<<endl;
     cout<<"The value of theta is:"<<this->theta<<endl;
     cout<<"The value of dtime is:"<<this->dtime<<endl;
     cout<<"The value of k is:"<<this->k<<endl;
@@ -37,6 +38,7 @@ void Parameter::show()
     cout<<"The length of coupon_time_rate is:"<<this->coupon_time_rate.size()<<endl;
     cout<<"The length of risk_free_rate is:"<<this->risk_free_rate.size()<<endl;
     cout<<"The length of rate_T is:"<<this->rate_T.size()<<endl;
+    cout<<"The length of i is:"<<this->i.size()<<endl;
 }
 
 void Parameter::readParam()
@@ -66,7 +68,9 @@ void Parameter::readParam()
         this->R = root["R"].asDouble();
         this->eta = root["eta"].asDouble();
         this->dtime = root["dtime"].asDouble();
-
+        this->Bc_star = root["Bc_star"].asDouble();
+        this->Bp_star = root["Bp_star"].asDouble();
+        this->theta = root["theta"].asDouble();
         const Json::Value no_call_time = root["no_call_time"];
         for (int i=0;i<no_call_time.size();i++)
         {
@@ -84,7 +88,7 @@ void Parameter::readParam()
         {
             this->no_convert_time.push_back(no_convert_time[i].asInt());
         }
-
+        
         const Json::Value coupon_time_rate = root["coupon_time_rate"];
         for (int i=0;i<coupon_time_rate.size();i++)
         {
@@ -118,4 +122,51 @@ void Parameter::calParam()
     this->dt = this->T/this->Nt;
     this->rhopenltycall = 1000000/(this->dt*this->dt);
     this->rhopenltyput = 1000000/(this->dt*this->dt);
+}
+
+void Parameter::setBoundaryParam()
+{
+    //设置i
+    for(int i=1;i<this->Ns+2;i++)
+    {
+        this->i.push_back(i);
+    }
+    
+    //设置S
+    for(int i=0;i<this->Ns+1;i++)
+    {
+        double tmp = i*this->ds;
+        this->S.push_back(tmp);
+    }
+    
+    this->Bc_T = this->Bc_star + this->final_coupon_rate*this->F;
+    this->Bp_T = this->Bp_star + this->final_coupon_rate*this->F;
+
+    //设置k_T
+    for (int i=0;i<this->S.size();i++)
+    {
+        double tmp = this->F/(this->conversion_price-this->q*ceil(this->T-this->dtime));
+        this->k_T.push_back(tmp);
+    }
+    
+    //设置u
+    for (int i =0;i<this->S.size();i++)
+    {
+        double tmp_1 = this->k_T[i]*this->S[i]+this->coupon_time_rate[0]*this->F;
+        double tmp_2 = this->F+this->final_coupon_rate*this->F+this->coupon_time_rate[0]*this->F;
+        double tmp_3 = max(tmp_1,tmp_2);
+        u.push_back(tmp_3);
+        //cout<<i+1<<" "<<tmp_3<<endl;
+    }
+
+    //设置B
+    for(int i=0;i<this->Ns+1;i++)
+    {
+        double tmp = this->F + this->final_coupon_rate*this->F;
+        B.push_back(tmp);
+    }
+
+    cout<<"***"<<this->u[0]<<"***"<<endl;
+    cout<<"***"<<this->u[this->S.size()-1]<<"***";
+
 }

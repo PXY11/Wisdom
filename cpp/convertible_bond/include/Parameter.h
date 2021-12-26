@@ -11,6 +11,7 @@ public:
     void show();
     void readParam();
     void calParam();
+    void setBoundaryParam();
     ~Parameter(){}
 
 private:
@@ -32,6 +33,7 @@ private:
     vector<int> no_put_time;
     vector<int> no_convert_time;
     double Bc_star;
+    double Bp_star;
     double theta;
     vector<double> coupon_time_rate;
     vector<double> risk_free_rate;
@@ -42,6 +44,16 @@ private:
     double dt; //calculated
     double rhopenltycall; //calculated
     double rhopenltyput; //calculated
+
+    vector<double> i; //boundary condition
+    vector<double> S; //boundary condition
+    double Bc_T; //boundary condition
+    double Bp_T; //boundary condition
+    vector<double> k_T; //boundary condition
+    vector<double> u; //boundary condition
+    vector<double> B; //boundary condition
+
+
 };  
 
 #endif
