@@ -22,8 +22,9 @@ int main(){
     pdesolver.pde_param_ptr->readParam();
     pdesolver.pde_param_ptr->calParam();
     pdesolver.pde_param_ptr->setBoundaryParam();
-    pdesolver.pde_param_ptr->show();
-    cout<<pdesolver.pde_param_ptr->rhopenltycall;
+    //pdesolver.pde_param_ptr->show();
+    cout<<pdesolver.pde_param_ptr->rhopenltycall<<endl;
+    cout<<pdesolver.pde_param_ptr->dt<<endl;
 /*
     pde_param_ptr->readParam();
     pde_param_ptr->calParam();
