@@ -40,10 +40,10 @@ void PDESolver::solve()
     {
         if(flag=1)
             break;
-        t = n*this->pde_param_ptr->dt;
-        rate1 = this->interp(this->pde_param_ptr->rate_T,this->pde_param_ptr->risk_free_rate,n*this->dt);
-        rate2 = this->interp(this->pde_param_ptr->rate_T,this->pde_param_ptr->risk_free_rate,(n-1)*this->dt);
-        r = -(log(rate2/rate1)/this->pde_param_ptr->dt);
+        double t = n*this->pde_param_ptr->dt;
+        double rate1 = this->interp(this->pde_param_ptr->rate_T,this->pde_param_ptr->risk_free_rate,n*this->pde_param_ptr->dt);
+        double rate2 = this->interp(this->pde_param_ptr->rate_T,this->pde_param_ptr->risk_free_rate,(n-1)*this->pde_param_ptr->dt);
+        double r = -(log(rate2/rate1)/this->pde_param_ptr->dt);
 
         if (ceil(t-this->pde_param_ptr->dtime)-ceil(t-this->pde_param_ptr->dt-this->pde_param_ptr->dtime))==1)
         {
@@ -65,7 +65,7 @@ void PDESolver::solve()
         vector<double> alpha;
         for (int i =2;i<=this->pde_param_ptr->Ns;i++)
         {
-            double tmp_1 = power(this->pde_param_ptr->sigma,2)*power(this->pde_param_ptr->S[i],2)/(2*power(this->pde_param_ptr->ds,2));
+            double tmp_1 = pow(this->pde_param_ptr->sigma,2)*pow(this->pde_param_ptr->S[i],2)/(2*pow(this->pde_param_ptr->ds,2));
             double tmp_2 = (r+this->pde_param_ptr->p*this->pde_param_ptr->eta-this->pde_param_ptr->q)*this->pde_param_ptr->S[i]/(2*this->pde_param_ptr->ds);
             double tmp_3 = (tmp_1 - tmp_2)*this->pde_param_ptr->dt;
             alpha.push_back(tmp_3);
@@ -74,7 +74,7 @@ void PDESolver::solve()
         vector<double> beta;
         for (int i =2;i<=this->pde_param_ptr->Ns;i++)
         {
-            double tmp_1 = power(this->pde_param_ptr->sigma,2)*power(this->pde_param_ptr->S[i],2)/(2*power(this->pde_param_ptr->ds,2));
+            double tmp_1 = pow(this->pde_param_ptr->sigma,2)*pow(this->pde_param_ptr->S[i],2)/(2*pow(this->pde_param_ptr->ds,2));
             double tmp_2 = (r+this->pde_param_ptr->p*this->pde_param_ptr->eta-this->pde_param_ptr->q)*this->pde_param_ptr->S[i]/(2*this->pde_param_ptr->ds);
             double tmp_3 = (tmp_1 - tmp_2)*this->pde_param_ptr->dt;
             beta.push_back(tmp_3);
@@ -93,7 +93,7 @@ void PDESolver::solve()
         }
         beta_MuMB.push_back(0);
         beta_MuMB.push_back(0);
-        gamma_Mu=[-(r+p)*dt;-(alpha+beta+(r+p)*dt);0];
+        //gamma_Mu=[-(r+this->pde_param_ptr->p)*dt;-(alpha+beta+(r+this->pde_param_ptr->p)*this->pde_param_ptr->dt);0];
         vector<double> gamma_Mu;
 
     }
