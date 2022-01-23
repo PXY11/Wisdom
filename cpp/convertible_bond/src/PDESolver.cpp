@@ -181,7 +181,16 @@ void PDESolver::solve()
                 this->pde_param_ptr->B[i] = Bc_n;
             }    
         }
-        
+        vector<double> Muu;
+        for(int i=0;i<this->pde_param_ptr->S.size();i++)
+        {
+            double tmp_1 = max(k_n[i]*(1-this->pde_param_ptr->eta)*this->pde_param_ptr->S[i],this->pde_param_ptr->R*this->pde_param_ptr->B[i]);
+            double tmp_2 = this->pde_param_ptr->p*this->pde_param_ptr->dt*tmp_1;
+            Muu.push_back(tmp_2);
+        }
+        vector<double> u;
+
+
     }
 }
 
