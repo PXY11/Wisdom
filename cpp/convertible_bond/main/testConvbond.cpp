@@ -22,7 +22,7 @@ int main(){
     pdesolver.pde_param_ptr->readParam();
     pdesolver.pde_param_ptr->calParam();
     pdesolver.pde_param_ptr->setBoundaryParam();
-    //pdesolver.pde_param_ptr->show();
+    pdesolver.pde_param_ptr->show();  //用于输出pde parameters
     cout<<"rhopenltycall="<<pdesolver.pde_param_ptr->rhopenltycall<<endl;
     //cout<<pdesolver.pde_param_ptr->dt<<endl;
 /*

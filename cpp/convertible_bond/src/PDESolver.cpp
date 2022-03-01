@@ -39,8 +39,8 @@ void PDESolver::solve()
     int flag = 0;
     for (int n=1; n<=this->pde_param_ptr->Nt; n++)
     {
-        if(flag=1)
-            break;
+        if(flag==1)
+        {break;}
         double t = n*this->pde_param_ptr->dt;
         double rate1 = this->interp(this->pde_param_ptr->rate_T,this->pde_param_ptr->risk_free_rate,n*this->pde_param_ptr->dt);
         double rate2 = this->interp(this->pde_param_ptr->rate_T,this->pde_param_ptr->risk_free_rate,(n-1)*this->pde_param_ptr->dt);
