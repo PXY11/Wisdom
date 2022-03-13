@@ -19,3 +19,7 @@ g++ main/testReadJsonFile.cpp ./lib_json/*.cpp -I ./ -o testReadJsonFile
 g++ main/testConvbond.cpp src/Parameter.cpp src/PDESolver.cpp lib_json/*.cpp -I ./ -I include/ -o testConvbond
 
 g++ main/testConvbond.cpp  -o testConvbond
+
+g++ testConvbond.cpp Parameter.cpp -I ./  -o testConvbond
+
+g++ testConvbond.cpp Parameter.cpp PDESolver.cpp  -I ./  -o testConvbond
