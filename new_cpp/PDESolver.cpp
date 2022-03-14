@@ -37,6 +37,98 @@ double PDESolver::interpCB(vector<double> x,vector<double> y,double ind)
     return res;
 }
 
+
+double PDESolver::getA(double arcs[N][N],int n)
+{
+    if(n==1)
+    {
+        return arcs[0][0];
+    }
+    double ans = 0;
+    double temp[N][N]={0.0};
+    int i,j,k;
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n-1;j++)
+        {
+            for(k=0;k<n-1;k++)
+            {
+                temp[j][k] = arcs[j+1][(k>=i)?k+1:k];
+
+            }
+        }
+        double t = this->getA(temp,n-1);
+        if(i%2==0)
+        {
+            ans += arcs[0][i]*t;
+        }
+        else
+        {
+            ans -=  arcs[0][i]*t;
+        }
+    }
+    return ans;
+}
+
+void  PDESolver::getAStart(double arcs[N][N],int n,double ans[N][N])
+{
+    if(n==1)
+    {
+        ans[0][0] = 1;
+        return;
+    }
+    int i,j,k,t;
+    double temp[N][N];
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            for(k=0;k<n-1;k++)
+            {
+                for(t=0;t<n-1;t++)
+                {
+                    temp[k][t] = arcs[k>=i?k+1:k][t>=j?t+1:t];
+                }
+            }
+
+
+            ans[j][i]  =  this->getA(temp,n-1);
+            if((i+j)%2 == 1)
+            {
+                ans[j][i] = - ans[j][i];
+            }
+        }
+    }
+}
+
+bool PDESolver::GetMatrixInverse(double src[N][N],int n,double des[N][N])
+{
+    double flag=getA(src,n);
+    double t[N][N];
+    if(flag==0)
+    {
+        return false;
+    }
+    else
+    {
+        this->getAStart(src,n,t);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                des[i][j]=t[i][j]/flag;
+                // res[i][j] = des[i][j]; //用于存储已经计算好的逆矩阵
+                cout<<des[i][j]<<"\t";
+            }
+            cout<<endl;
+
+        }
+    }
+
+    return true;
+}
+
+
 double PDESolver::solve()
 {
     int count = 0;
@@ -272,6 +364,8 @@ double PDESolver::solve()
         cout<<"The length of B ="<<this->pde_param_ptr->B.size()<<endl;
         cout<<"The first 2 value and last 2 value of B ="<<this->pde_param_ptr->B[0]<<" "<<this->pde_param_ptr->B[1]<<" "<<this->pde_param_ptr->B[2399]<<" "<<this->pde_param_ptr->B[2400]<<endl;
         cout<<"***************"<<endl;
+
+        /*B的算法有问题，源代码中的是矩阵乘法*/
         for(int i=0;i<this->pde_param_ptr->B.size();i++)
         {
             double tmp1 = 1 - this->pde_param_ptr->theta*MB[i][i];
@@ -301,6 +395,7 @@ double PDESolver::solve()
         cout<<"The length of u ="<<this->pde_param_ptr->u.size()<<endl;
         cout<<"The first 2 value and last 2 value of u ="<<this->pde_param_ptr->u[0]<<" "<<this->pde_param_ptr->u[1]<<" "<<this->pde_param_ptr->u[2399]<<" "<<this->pde_param_ptr->u[2400]<<endl;
         cout<<"$$$$$$$$$$$$$$$$$"<<endl;
+        /* u的算法有问题，源代码中的是矩阵乘法 */
         for(int i=0;i<u_n.size();i++)
         {
             double tmp1 = 1 - this->pde_param_ptr->theta*Mu[i][i];
@@ -318,8 +413,10 @@ double PDESolver::solve()
         }
         cout<<"The length of u ="<<this->pde_param_ptr->u.size()<<endl;
         cout<<"The first 3 value and last 3 value of u ="<<this->pde_param_ptr->u[0]<<" "<<this->pde_param_ptr->u[1]<<" "<<this->pde_param_ptr->u[2]<<" "<<this->pde_param_ptr->u[2398]<<" "<<this->pde_param_ptr->u[2399]<<" "<<this->pde_param_ptr->u[2400]<<endl;
-        cout<<"u[4]"<<this->pde_param_ptr->u[4]<<endl;
-        cout<<"u[5]"<<this->pde_param_ptr->u[5]<<endl;
+        cout<<"u[4]= "<<this->pde_param_ptr->u[4]<<endl;
+        cout<<"u[5]= "<<this->pde_param_ptr->u[5]<<endl;
+        cout<<"u[225]= "<<this->pde_param_ptr->u[225]<<endl;
+        cout<<"u[2390]= "<<this->pde_param_ptr->u[2390]<<endl;
     }
 
     return 1;

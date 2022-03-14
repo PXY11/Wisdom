@@ -71,6 +71,13 @@ int main()
     //pdesolver.pde_param_ptr->setBoundaryParam();
     double res = pdesolver.solve();
     cout<<"Final res = "<<res<<endl;
+
+
+    //测试矩阵求逆功能
+    double matsrc[2][2] = {{1,0},{3,4}};
+    double matdes[2][2] = {{0,0},{0,0}};
+    bool ft = pdesolver.GetMatrixInverse(matsrc,2,matdes);
+    cout<<"ft = "<<ft<<endl;
     // pdesolver.pde_param_ptr->show();  //用于输出pde parameters
     // cout<<"rhopenltycall="<<pdesolver.pde_param_ptr->rhopenltycall<<endl;
     //cout<<pdesolver.pde_param_ptr->dt<<endl;
