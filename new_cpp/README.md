@@ -22,7 +22,8 @@ g++ main/testConvbond.cpp  -o testConvbond
 
 g++ testConvbond.cpp Parameter.cpp -I ./  -o testConvbond
 
-g++ testConvbond.cpp Parameter.cpp PDESolver.cpp  -I ./eigen-3.4.0  -o testConvbond
+g++ testConvbond.cpp Parameter.cpp PDESolver.cpp  -I ./eigen-3.4.0  -o3 -o testConvbond
 
 g++ eg.cpp -I eigen-3.4.0 -o eg
 
+g++ lu.cpp -I eigen-3.4.0 -o lu

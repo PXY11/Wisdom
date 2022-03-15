@@ -24,8 +24,11 @@ void Parameter::show()
     cout<<"The value of R is:"<<this->R<<endl;
     cout<<"The value of eta is:"<<this->eta<<endl;
     cout<<"The length of no_call_time is:"<<this->no_call_time.size()<<endl;
+    cout<<"The value no_call_time is:\n"<<this->no_call_time<<endl;
     cout<<"The length of no_put_time is:"<<this->no_put_time.size()<<endl;
+    cout<<"The value no_put_time is:\n"<<this->no_put_time<<endl;
     cout<<"The length of no_convert_time is:"<<this->no_convert_time.size()<<endl;
+    cout<<"The value of no_convert_time is:\n"<<this->no_convert_time<<endl;
     cout<<"The value of Bc_star is:"<<this->Bc_star<<endl;
     cout<<"The value of Bp_star is:"<<this->Bp_star<<endl;
     cout<<"The value of theta is:"<<this->theta<<endl;
@@ -36,29 +39,30 @@ void Parameter::show()
     cout<<"The value of rhopenltycall is:"<<this->rhopenltycall<<endl;
     cout<<"The value of rhopenltyput is:"<<this->rhopenltyput<<endl;
     cout<<"The length of coupon_time_rate is:"<<this->coupon_time_rate.size()<<endl;
+    cout<<"The value of coupon_time_rate is:\n"<<this->coupon_time_rate<<endl;
     cout<<"The length of risk_free_rate is:"<<this->risk_free_rate.size()<<endl;
-    cout<<"The value of risk_free_rate are:"<<endl;
-    for(int i=0;i<this->risk_free_rate.size();i++)
-    {cout<<this->risk_free_rate[i]<<" ";}
-    cout<<endl;
+    cout<<"The value of risk_free_rate are:\n"<<risk_free_rate<<endl;
+    // for(int i=0;i<this->risk_free_rate.size();i++)
+    // {cout<<this->risk_free_rate[i]<<" ";}
+    // cout<<endl;
     cout<<"The length of rate_T is:"<<this->rate_T.size()<<endl;
-    cout<<"The value of rate_T are:"<<endl;
-    for(int i=0;i<this->rate_T.size();i++)
-    {cout<<this->rate_T[i]<<" ";}
-    cout<<endl;
+    cout<<"The value of rate_T are:\n"<<rate_T<<endl;
+    // for(int i=0;i<this->rate_T.size();i++)
+    // {cout<<this->rate_T[i]<<" ";}
+    // cout<<endl;
 
-    cout<<"The length of i is:"<<this->i.size()<<endl;
-    cout<<"The first and last value of i is:"<<this->i[0]<<" "<<this->i[2400]<<endl;
-    cout<<"The length of S is:"<<this->S.size()<<endl;
-    cout<<"The first and last 2 value of S is:"<<this->S[0]<<" "<<this->S[2399]<<" "<<this->S[2400]<<endl;
-    cout<<"The value of Bc_T is:"<<this->Bc_T<<endl;
-    cout<<"The value of Bp_T is:"<<this->Bp_T<<endl;
-    cout<<"The length of k_T is:"<<this->k_T.size()<<endl;
-    cout<<"The first and last value of k_T is:"<<this->k_T[0]<<" "<<this->k_T[2400]<<endl;
-    cout<<"The length of u is:"<<this->u.size()<<endl;
-    cout<<"The first and last 2 value of u is:"<<this->u[0]<<" "<<this->u[2399]<<" "<<this->u[2400]<<endl;
-    cout<<"The length of B is:"<<this->B.size()<<endl;
-    cout<<"The first and last value of B is:"<<this->B[0]<<" "<<this->B[2400]<<endl;
+    // cout<<"The length of i is:"<<this->i.size()<<endl;
+    // cout<<"The first and last value of i is:"<<this->i[0]<<" "<<this->i[2400]<<endl;
+    // cout<<"The length of S is:"<<this->S.size()<<endl;
+    // cout<<"The first and last 2 value of S is:"<<this->S[0]<<" "<<this->S[2399]<<" "<<this->S[2400]<<endl;
+    // cout<<"The value of Bc_T is:"<<this->Bc_T<<endl;
+    // cout<<"The value of Bp_T is:"<<this->Bp_T<<endl;
+    // cout<<"The length of k_T is:"<<this->k_T.size()<<endl;
+    // cout<<"The first and last value of k_T is:"<<this->k_T[0]<<" "<<this->k_T[2400]<<endl;
+    // cout<<"The length of u is:"<<this->u.size()<<endl;
+    // cout<<"The first and last 2 value of u is:"<<this->u[0]<<" "<<this->u[2399]<<" "<<this->u[2400]<<endl;
+    // cout<<"The length of B is:"<<this->B.size()<<endl;
+    // cout<<"The first and last value of B is:"<<this->B[0]<<" "<<this->B[2400]<<endl;
 }
 
 //void Parameter::readParam()
@@ -146,45 +150,45 @@ void Parameter::show()
 
 void Parameter::setBoundaryParam()
 {
-    //设置i
-    for(int i=1;i<this->Ns+2;i++)
-    {
-        this->i.push_back(i);
-    }
+    // //设置i
+    // for(int i=1;i<this->Ns+2;i++)
+    // {
+    //     this->i.push_back(i);
+    // }
     
-    //设置S
-    for(int i=0;i<this->Ns+1;i++)
-    {
-        double tmp = i*this->ds;
-        this->S.push_back(tmp);
-    }
+    // //设置S
+    // for(int i=0;i<this->Ns+1;i++)
+    // {
+    //     double tmp = i*this->ds;
+    //     this->S.push_back(tmp);
+    // }
     
-    this->Bc_T = this->Bc_star + this->final_coupon_rate*this->F;
-    this->Bp_T = this->Bp_star + this->final_coupon_rate*this->F;
+    // this->Bc_T = this->Bc_star + this->final_coupon_rate*this->F;
+    // this->Bp_T = this->Bp_star + this->final_coupon_rate*this->F;
 
-    //设置k_T
-    for (int i=0;i<this->S.size();i++)
-    {
-        double tmp = this->F/(this->conversion_price-this->q*ceil(this->T-this->dtime));
-        this->k_T.push_back(tmp);
-    }
+    // //设置k_T
+    // for (int i=0;i<this->S.size();i++)
+    // {
+    //     double tmp = this->F/(this->conversion_price-this->q*ceil(this->T-this->dtime));
+    //     this->k_T.push_back(tmp);
+    // }
     
-    //设置u
-    for (int i =0;i<this->S.size();i++)
-    {
-        double tmp_1 = this->k_T[i]*this->S[i]+this->coupon_time_rate[0]*this->F;
-        double tmp_2 = this->F+this->final_coupon_rate*this->F+this->coupon_time_rate[0]*this->F;
-        double tmp_3 = max(tmp_1,tmp_2);
-        u.push_back(tmp_3);
-        //cout<<i+1<<" "<<tmp_3<<endl;
-    }
+    // //设置u
+    // for (int i =0;i<this->S.size();i++)
+    // {
+    //     double tmp_1 = this->k_T[i]*this->S[i]+this->coupon_time_rate[0]*this->F;
+    //     double tmp_2 = this->F+this->final_coupon_rate*this->F+this->coupon_time_rate[0]*this->F;
+    //     double tmp_3 = max(tmp_1,tmp_2);
+    //     u.push_back(tmp_3);
+    //     //cout<<i+1<<" "<<tmp_3<<endl;
+    // }
 
-    //设置B
-    for(int i=0;i<this->Ns+1;i++)
-    {
-        double tmp = this->F + this->final_coupon_rate*this->F;
-        B.push_back(tmp);
-    }
+    // //设置B
+    // for(int i=0;i<this->Ns+1;i++)
+    // {
+    //     double tmp = this->F + this->final_coupon_rate*this->F;
+    //     B.push_back(tmp);
+    // }
 
     //cout<<"***"<<this->u[0]<<"***"<<endl;
     //cout<<"***"<<this->u[this->S.size()-1]<<"***";
