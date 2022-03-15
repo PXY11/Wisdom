@@ -122,7 +122,7 @@ double PDESolver::solve()
     MatrixXd u_old;
     MatrixXd P1(height,weight);
     MatrixXd P2(height,weight);
-    for(int n=1;n<2;n++)
+    for(int n=1;n<5;n++)
     {
         if(flag==1) break;
         t = n*this->pde_param_ptr->dt;
