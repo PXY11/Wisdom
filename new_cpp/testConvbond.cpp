@@ -48,7 +48,6 @@ int main()
     vector<double> rate_T(rateT,rateT+6);
     
     
-    
     double dtime= 0.33;
 
 
@@ -59,12 +58,12 @@ int main()
     pdesolver.set_iter(9);
     pdesolver.show_iter();
 
-    cout<<"*******"<<endl;
+    cout<<"*******First value of B"<<endl;
     cout<<paras.B[0]<<endl;  
     cout<<pdesolver.pde_param_ptr->B[0]<<endl;
-    cout<<"*******"<<endl;
+    cout<<"***********************"<<endl;
     pdesolver.pde_param_ptr->show();
-    cout<<endl<<"*********show complete*********"<<endl;
+    cout<<"\n*********show complete*********"<<endl;
 
 
     /* 测试convertible_code.m 功能*/
@@ -74,10 +73,16 @@ int main()
 
 
     //测试矩阵求逆功能
-    double matsrc[2][2] = {{1,0},{3,4}};
-    double matdes[2][2] = {{0,0},{0,0}};
-    bool ft = pdesolver.GetMatrixInverse(matsrc,2,matdes);
-    cout<<"ft = "<<ft<<endl;
+    // double matsrc[2][2] = {{1,0},{3,4}};
+    // double matdes[2][2] = {{0,0},{0,0}};
+    // bool ft = pdesolver.GetMatrixInverse(matsrc,2,matdes);
+    // cout<<"ft = "<<ft<<endl;
+
+    // double left[2][2] = {{1,1},{2,3}};
+    // double right[2][2] = {{3,4},{5,6}};
+    // pdesolver.MatMul(left,right);
+
+    
     // pdesolver.pde_param_ptr->show();  //用于输出pde parameters
     // cout<<"rhopenltycall="<<pdesolver.pde_param_ptr->rhopenltycall<<endl;
     //cout<<pdesolver.pde_param_ptr->dt<<endl;

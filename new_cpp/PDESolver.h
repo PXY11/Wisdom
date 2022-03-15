@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 #include"Parameter.h"
-#define N 2
+// #define N 2
+// #define M 2
 using namespace std;
 
 class PDESolver
@@ -22,9 +23,10 @@ public:
     double interpCB(vector<double> x, vector<double> y, double ind);
     double solve(); //解PDE，所有操作均是对get_pde_param_ptr()返回的实例去做操作，
                   //最终计算结果会保存在Parameter实例的属性u中，根据索引可查得对应的价格
-    double getA(double arcs[N][N],int n);
-    void  getAStart(double arcs[N][N],int n,double ans[N][N]);
-    bool GetMatrixInverse(double src[N][N],int n,double des[N][N]);
+    // double getA(double arcs[N][N],int n);
+    // void  getAStart(double arcs[N][N],int n,double ans[N][N]);
+    // bool GetMatrixInverse(double src[N][N],int n,double des[N][N]);
+    // vector<vector<double>*>  MatMul(double left[N][M],double right[M][N]);
 
     double calBpstar();
     double calBcstar();
