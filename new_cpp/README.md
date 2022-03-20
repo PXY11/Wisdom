@@ -28,3 +28,6 @@ https://eigen.tuxfamily.org/index.php?title=Main_Page
 https://www.cnblogs.com/goingupeveryday/p/5699053.html
 
 https://www.cnblogs.com/rainbow70626/p/8819119.html
+
+
+g++ sp.cpp -I ./eigen-3.4.0 -o sp
