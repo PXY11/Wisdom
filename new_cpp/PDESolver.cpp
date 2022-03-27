@@ -201,18 +201,15 @@ double PDESolver::solve()
 
         // for(int i=0;i<alpha.size();i++) alpha_MuMB(i+2) = alpha(i); //使用tridiag的代码需要下对角线前置位补0
 
-        for(int i=0;i<alpha.size();i++) alpha_MuMB(i) = alpha(i); //源代码需要下对角线末尾补0
-        // alpha_MuMB(alpha_MuMB.size()-2) = 0;
-        // alpha_MuMB(alpha_MuMB.size()-1) = 0;
+        for(int i=0;i<alpha.size();i++) alpha_MuMB(i) = alpha(i); //源代码需要下对角线末尾补0，由于初始化时默认alpha_MuMB的2401个元素全为0，将alpha (2399x1) 的所有元素赋值到alpha_MuMB后，剩余的2个位置即为补上的0，对应converible_bond.m中97行
+
         // cout<<"alpha_MuMB --> "<<alpha_MuMB.transpose()<<endl;
         cout<<"alpha_MuMB size = "<<alpha_MuMB.size()<<endl;
         cout<<"alpha_MuMB 计算完毕"<<endl;        
 
         // for(int i=0;i<beta.size();i++) beta_MuMB(i) = beta(i); //使用tridiag的代码需要上对角线末尾补0
 
-        // beta_MuMB(0) = 0; 
-        // beta_MuMB(1) = 0;
-        for(int i=0;i<beta.size();i++) beta_MuMB(i+2) = beta(i);//源代码需要上对角线前置位补0
+        for(int i=0;i<beta.size();i++) beta_MuMB(i+2) = beta(i);//源代码需要上对角线前置位补0，赋值原理同alpha，对应convertible_bond.m中99行
         // cout<<"beta_MuMB --> "<<beta_MuMB.transpose()<<endl;
         cout<<"beta_MuMB size = "<<beta_MuMB.size()<<endl;
         cout<<"beta_MuMB 计算完毕"<<endl; 
@@ -258,15 +255,15 @@ double PDESolver::solve()
 
         for(int i=0;i<height;i++)
         {
-            MB(i,i) = gamma_MB(i);
+            MB(i,i) = gamma_MB(i);  //MB的主对角线为gamma_MB
         }
         for(int i=1;i<height;i++)
         {
-            MB(i-1,i) = beta_MuMB(i);
+            MB(i-1,i) = beta_MuMB(i); //MB的上对角线为beta_MuMB
         }
         for(int i=1;i<height;i++)
         {
-            MB(i,i-1) = alpha_MuMB(i-1);
+            MB(i,i-1) = alpha_MuMB(i-1); //MB的下对角线为alpha_MuMB
         }
         //输出MB左上角和右下角部分元素
         cout<<"MB(0,0)--> "<<MB(0,0)<<" MB(1,1)--> "<<MB(1,1)<<endl;

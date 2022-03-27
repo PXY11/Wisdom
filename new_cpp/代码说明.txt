@@ -16,4 +16,8 @@ PDESolver.cpp          convertible_bond.m
 75-123           <-->     47-56
 161-399          <-->     63-144   
 
+4、matlab代码在计算过程中新产生的变量，在C++中全部需要预先定义，PDESolveer.cpp的126-158行中定义了这些变量
+
 【待解决问题】
+矩阵求逆速度问题，PDESolver.cpp中共有3处代码涉及矩阵求逆运算，分别为332，363,463行，对应convertible_bond.m中的129,134,150行。
+
