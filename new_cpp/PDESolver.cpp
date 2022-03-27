@@ -5,7 +5,7 @@
 #include <Eigen/LU>
 #include <ctime>
 #include <fstream>
-ofstream mycout("temp.txt");
+// ofstream mycout("temp.txt");
 using namespace Eigen;
 using namespace std;
 
@@ -156,7 +156,7 @@ double PDESolver::solve()
     MatrixXd u_old;
     MatrixXd P1(height,weight);
     MatrixXd P2(height,weight);
-    for(int n=1;n<2;n++)
+    for(int n=1;n<5;n++)  //matlab源文件中n范围为251，由于计算速度原因此处仅设置为5作为测试
     {
         if(flag==1) break;
         t = n*this->pde_param_ptr->dt;
@@ -199,21 +199,21 @@ double PDESolver::solve()
         cout<<"beta size = "<<beta.size()<<endl;
         cout<<"beta 计算完毕"<<endl;        
 
-        // for(int i=0;i<alpha.size();i++) alpha_MuMB(i+2) = alpha(i); //老师的代码需要下对角线前置位补0
+        // for(int i=0;i<alpha.size();i++) alpha_MuMB(i+2) = alpha(i); //使用tridiag的代码需要下对角线前置位补0
 
         for(int i=0;i<alpha.size();i++) alpha_MuMB(i) = alpha(i); //源代码需要下对角线末尾补0
         // alpha_MuMB(alpha_MuMB.size()-2) = 0;
         // alpha_MuMB(alpha_MuMB.size()-1) = 0;
-        cout<<"alpha_MuMB --> "<<alpha_MuMB.transpose()<<endl;
+        // cout<<"alpha_MuMB --> "<<alpha_MuMB.transpose()<<endl;
         cout<<"alpha_MuMB size = "<<alpha_MuMB.size()<<endl;
         cout<<"alpha_MuMB 计算完毕"<<endl;        
 
-        // for(int i=0;i<beta.size();i++) beta_MuMB(i) = beta(i); //老师的代码需要上对角线末尾补0
+        // for(int i=0;i<beta.size();i++) beta_MuMB(i) = beta(i); //使用tridiag的代码需要上对角线末尾补0
 
         // beta_MuMB(0) = 0; 
         // beta_MuMB(1) = 0;
         for(int i=0;i<beta.size();i++) beta_MuMB(i+2) = beta(i);//源代码需要上对角线前置位补0
-        cout<<"beta_MuMB --> "<<beta_MuMB.transpose()<<endl;
+        // cout<<"beta_MuMB --> "<<beta_MuMB.transpose()<<endl;
         cout<<"beta_MuMB size = "<<beta_MuMB.size()<<endl;
         cout<<"beta_MuMB 计算完毕"<<endl; 
 
@@ -252,7 +252,7 @@ double PDESolver::solve()
             gamma_MB(i+1) = tmp;
         }
         // gamma_MB.middleRows(1,2400) = -(alpha+beta+(r+this->pde_param_ptr->p*(1-this-> pde_param_ptr-> R))*this->pde_param_ptr->dt);
-        cout<<"gamma_MB --> "<<gamma_MB.transpose()<<endl;
+        // cout<<"gamma_MB --> "<<gamma_MB.transpose()<<endl;
         cout<<"gamma_MB size = "<<gamma_MB.size()<<endl;
         cout<<"gamma_MB 计算完毕"<<endl; 
 
@@ -268,14 +268,15 @@ double PDESolver::solve()
         {
             MB(i,i-1) = alpha_MuMB(i-1);
         }
+        //输出MB左上角和右下角部分元素
         cout<<"MB(0,0)--> "<<MB(0,0)<<" MB(1,1)--> "<<MB(1,1)<<endl;
         cout<<"MB(0,1)--> "<<MB(0,1)<<" MB(1,0)--> "<<MB(1,0)<<" MB(1,2)--> "<<MB(1,2)<<endl;
         cout<<"MB(2400,2400)--> "<<MB(2400,2400)<<" MB(2399,2399)--> "<<MB(2399,2399)<<endl;
         cout<<"MB(2400,2399)--> "<<MB(2400,2399)<<" MB(2399,2400)-->  "<<MB(2399,2400)<<endl;
         cout<<"MB size = "<<MB.size()<<endl;
         cout<<"MB 计算完毕"<<endl; 
-        mycout<<MB<<endl;
-        mycout.close();
+        // mycout<<MB<<endl;
+        // mycout.close();
 
         AccI = (ceil(t) - t)*this->pde_param_ptr->coupon_time_rate(int(ceil(t)))*this->pde_param_ptr->F;
         cout<<"AccI = "<<AccI<<endl;
@@ -329,234 +330,233 @@ double PDESolver::solve()
         // MatrixXd uuu(2401,1);
         // B = tridiag(2401,alpha_MuMB,gamma_MB,beta_MuMB,uuu,tmp2);
         B = tmp1.partialPivLu().solve(tmp2); //用LU分解替代直接求逆 方法参考 http://www.javashuo.com/article/p-fjkcsfmi-ey.html
-        cout<<"B --> "<<B.transpose()<<endl;
+        // cout<<"B --> "<<B.transpose()<<endl;
         cout << "time use in LU composition is       " << 1000 * (clock() - time_stt) / (double)
             CLOCKS_PER_SEC << "ms" << endl;
         cout<<"B size = "<<B.size()<<endl;
         cout<<"B 计算完毕"<<endl;
 
-        // for(int i=0;i<B.size();i++)
-        // {
-        //     if(B(i)>Bc_n) B(i) = Bc_n;
-        // }
+        for(int i=0;i<B.size();i++)
+        {
+            if(B(i)>Bc_n) B(i) = Bc_n;
+        }
 
 
-        // for(int i=0;i<S.size();i++)
-        // {
-        //     double tmp1 = max(k_n(i)*(1-this->pde_param_ptr->eta)*S(i),this->pde_param_ptr->R*B(i));
-        //     double tmp2 = this->pde_param_ptr->p*this->pde_param_ptr->dt;
-        //     Muu(i) = (tmp1*tmp2);
-        // }
-        // // cout<<Muu.transpose()<<endl;
-        // cout<<"Muu size = "<<Muu.size()<<endl;
-        // cout<<"Muu 计算完毕"<<endl;
+        for(int i=0;i<S.size();i++)
+        {
+            double tmp1 = max(k_n(i)*(1-this->pde_param_ptr->eta)*S(i),this->pde_param_ptr->R*B(i));
+            double tmp2 = this->pde_param_ptr->p*this->pde_param_ptr->dt;
+            Muu(i) = (tmp1*tmp2);
+        }
+        // cout<<Muu.transpose()<<endl;
+        cout<<"Muu size = "<<Muu.size()<<endl;
+        cout<<"Muu 计算完毕"<<endl;
 
-        // tmp1 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (this->pde_param_ptr->theta)*Mu);
-        // tmp2 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (1-this->pde_param_ptr->theta)*Mu)*u_n;
-        // for(int i=0;i<this->pde_param_ptr->Ns;i++) tmp2(i) = tmp2(i) + Muu(i);
-        // tmp2(tmp2.size()-1) = tmp2(tmp2.size()-1) + 0;
-        // // tmp3 = tmp1.transpose();
-        // cout<<"tmp1 size="<<tmp1.size()<<endl;
-        // cout<<"tmp2 size="<<tmp2.size()<<endl;
-        // time_stt = clock();
-        // u = tmp1.partialPivLu().solve(tmp2); //用LU分解替代直接求逆
-        // cout << "time use in LU composition is       " << 1000 * (clock() - time_stt) / (double)
-        //     CLOCKS_PER_SEC << "ms" << endl;
-        // // cout<<u.transpose()<<endl;
-        // cout<<"u size = "<<u.size()<<endl;
-        // cout<<"u 计算完毕"<<endl;
+        tmp1 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (this->pde_param_ptr->theta)*Mu);
+        tmp2 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (1-this->pde_param_ptr->theta)*Mu)*u_n;
+        for(int i=0;i<this->pde_param_ptr->Ns;i++) tmp2(i) = tmp2(i) + Muu(i);
+        tmp2(tmp2.size()-1) = tmp2(tmp2.size()-1) + 0;
+        // tmp3 = tmp1.transpose();
+        cout<<"tmp1 size="<<tmp1.size()<<endl;
+        cout<<"tmp2 size="<<tmp2.size()<<endl;
+        time_stt = clock();
+        u = tmp1.partialPivLu().solve(tmp2); //用LU分解替代直接求逆
+        cout << "time use in LU composition is       " << 1000 * (clock() - time_stt) / (double)
+            CLOCKS_PER_SEC << "ms" << endl;
+        // cout<<u.transpose()<<endl;
+        cout<<"u size = "<<u.size()<<endl;
+        cout<<"u 计算完毕"<<endl;
 
-        // // for(int i=0;i<u.size();i++)
+        // for(int i=0;i<u.size();i++)
         
-        
-        // MatrixXd tmp111 = k_n.array()*S.array();
-        // MatrixXd tmp11 = tmp111.array().max(Bc_n);
-        // tmp1 = tmp11.array().min(u.array());
-        // MatrixXd tmp22 = k_n.array()*S.array();
-        // tmp2 = tmp22.array().max(Bp_n);
-        // u = tmp1.array().max(tmp2.array());
-        // // cout<<"u -> "<<u.transpose()<<endl;
-        // for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
-        // {
-        //     double tmp;
-        //     if(u(i)<=tmp2(i))
-        //         tmp = 1;
-        //     else
-        //         tmp = 0;
-        //     P1_old(i,i) = tmp;
-        // }
-        // P1_old =  this->pde_param_ptr->rhopenltyput * P1_old;
-        // // cout<<"P1_old \n"<<P1_old.transpose()<<endl;
-        // for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
-        // {
-        //     double tmp;
-        //     if(u(i)>=tmp11(i))
-        //         tmp = 1;
-        //     else
-        //         tmp = 0;
-        //     P2_old(i,i) = tmp;
-        // }
-        // P2_old = -this->pde_param_ptr->rhopenltycall * P2_old;
-        // // cout<<"P2_old \n"<<P2_old.transpose()<<endl;
-        // while(1)
-        // {
-        //     count++;
-        //     u_old = u;
-        //     cout<<"u_old size = "<<u_old.size();
-        //     for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
-        //     {
-        //         double tmp;
-        //         if(u(i)<=tmp2(i))
-        //             tmp = 1;
-        //         else
-        //             tmp = 0;
-        //         P1(i,i) = tmp;
-        //     }
-        //     cout<<"complete"<<endl;
-        //     P1 = this->pde_param_ptr->rhopenltyput * P1;
-        //     for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
-        //     {
-        //         double tmp;
-        //         if(u(i)>=tmp11(i))
-        //             tmp = 1;
-        //         else
-        //             tmp = 0;
-        //         P2_old(i,i) = tmp;
-        //     }
-        //     P2 = -this->pde_param_ptr->rhopenltycall * P2;
-        //     MatrixXd tmpu1(height,weight); 
-        //     // cout<<"speye size = "<<(MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1)).size()<<endl;
-        //     // cout<<"Mu size = "<<Mu.size()<<endl;
-        //     // cout<<"P1 size = "<<P1.size()<<endl;
-        //     // cout<<"P2 size = "<<P2.size()<<endl;
-        //     tmpu1 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (this->pde_param_ptr->theta)*Mu + P1- P2 );
-        //     // cout<<tmpu1<<endl;
+        MatrixXd tmp111 = k_n.array()*S.array();
+        MatrixXd tmp11 = tmp111.array().max(Bc_n);
+        tmp1 = tmp11.array().min(u.array());
+        MatrixXd tmp22 = k_n.array()*S.array();
+        tmp2 = tmp22.array().max(Bp_n);
+        u = tmp1.array().max(tmp2.array());
+        // cout<<"u -> "<<u.transpose()<<endl;
+        for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
+        {
+            double tmp;
+            if(u(i)<=tmp2(i))
+                tmp = 1;
+            else
+                tmp = 0;
+            P1_old(i,i) = tmp;
+        }
+        P1_old =  this->pde_param_ptr->rhopenltyput * P1_old;
+        // cout<<"P1_old \n"<<P1_old.transpose()<<endl;
+        for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
+        {
+            double tmp;
+            if(u(i)>=tmp11(i))
+                tmp = 1;
+            else
+                tmp = 0;
+            P2_old(i,i) = tmp;
+        }
+        P2_old = -this->pde_param_ptr->rhopenltycall * P2_old;
+        // cout<<"P2_old \n"<<P2_old.transpose()<<endl;
+        while(1)
+        {
+            count++;
+            u_old = u;
+            cout<<"u_old size = "<<u_old.size();
+            for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
+            {
+                double tmp;
+                if(u(i)<=tmp2(i))
+                    tmp = 1;
+                else
+                    tmp = 0;
+                P1(i,i) = tmp;
+            }
+            cout<<"complete"<<endl;
+            P1 = this->pde_param_ptr->rhopenltyput * P1;
+            for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
+            {
+                double tmp;
+                if(u(i)>=tmp11(i))
+                    tmp = 1;
+                else
+                    tmp = 0;
+                P2_old(i,i) = tmp;
+            }
+            P2 = -this->pde_param_ptr->rhopenltycall * P2;
+            MatrixXd tmpu1(height,weight); 
+            // cout<<"speye size = "<<(MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1)).size()<<endl;
+            // cout<<"Mu size = "<<Mu.size()<<endl;
+            // cout<<"P1 size = "<<P1.size()<<endl;
+            // cout<<"P2 size = "<<P2.size()<<endl;
+            tmpu1 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (this->pde_param_ptr->theta)*Mu + P1- P2 );
+            // cout<<tmpu1<<endl;
 
-        //     MatrixXd tmpu2(height,weight); 
-        //     tmpu2 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (1-this->pde_param_ptr->theta)*Mu)*u_n;
-        //     for(int i=0;i<this->pde_param_ptr->Ns;i++) tmpu2(i) = tmpu2(i) + Muu(i);
-        //     tmpu2(tmpu2.size()-1) = tmpu2(tmpu2.size()-1) + 0;
+            MatrixXd tmpu2(height,weight); 
+            tmpu2 = (MatrixXd::Identity(this->pde_param_ptr->Ns+1,this->pde_param_ptr->Ns+1) - (1-this->pde_param_ptr->theta)*Mu)*u_n;
+            for(int i=0;i<this->pde_param_ptr->Ns;i++) tmpu2(i) = tmpu2(i) + Muu(i);
+            tmpu2(tmpu2.size()-1) = tmpu2(tmpu2.size()-1) + 0;
             
-        //     MatrixXd tmpu3(height,weight);
-        //     cout<<"P1 size = "<<P1.size()<<endl;
-        //     tmpu3 = (k_n.array()*S.array()).array().max(Bp_n);
-        //     for(int i=0;i<height;i++)
-        //     {
-        //         if(P1(i,i)==1)
-        //             tmpu3(i) *= 1;
-        //         else
-        //             tmpu3(i) *= 0;
-        //     }
-        //     cout<<"tmpu3 size = "<<tmpu3.size()<<endl;
-        //     // cout<<"$$$-> "<<tmpu3.transpose()*tmpu3<<endl;
+            MatrixXd tmpu3(height,weight);
+            cout<<"P1 size = "<<P1.size()<<endl;
+            tmpu3 = (k_n.array()*S.array()).array().max(Bp_n);
+            for(int i=0;i<height;i++)
+            {
+                if(P1(i,i)==1)
+                    tmpu3(i) *= 1;
+                else
+                    tmpu3(i) *= 0;
+            }
+            cout<<"tmpu3 size = "<<tmpu3.size()<<endl;
+            // cout<<"$$$-> "<<tmpu3.transpose()*tmpu3<<endl;
 
-        //     MatrixXd tmpu4(height,weight);
-        //     tmpu4 = (k_n.array()*S.array()).array().min(Bc_n);
-        //     for(int i=0;i<height;i++)
-        //     {
-        //         if(P2(i,i)==1)
-        //             tmpu4(i) *= 1;
-        //         else
-        //             tmpu4(i) *= 0;
-        //     }
+            MatrixXd tmpu4(height,weight);
+            tmpu4 = (k_n.array()*S.array()).array().min(Bc_n);
+            for(int i=0;i<height;i++)
+            {
+                if(P2(i,i)==1)
+                    tmpu4(i) *= 1;
+                else
+                    tmpu4(i) *= 0;
+            }
 
-        //     u = tmpu1.partialPivLu().solve(tmpu2) + tmpu3 - tmpu4 ;
-        //     // cout<<"u -> \n"<<u.transpose()<<endl;
-        //     cout<<"u size = "<<u.size()<<endl;
-        //     for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
-        //     {
-        //         double tmp;
-        //         if(u(i)<=tmp2(i))
-        //             tmp = 1;
-        //         else
-        //             tmp = 0;
-        //         P1(i,i) = tmp;
-        //     }
-        //     cout<<"P1 size = "<<P1.size()<<endl;
-        //     P1 = this->pde_param_ptr->rhopenltyput * P1;
-        //     for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
-        //     {
-        //         double tmp;
-        //         if(u(i)>=tmp11(i))
-        //             tmp = 1;
-        //         else
-        //             tmp = 0;
-        //         P2_old(i,i) = tmp;
-        //     }
-        //     P2 = -this->pde_param_ptr->rhopenltycall * P2;
-        //     cout<<"P2 size = "<<P2.size()<<endl;
+            u = tmpu1.partialPivLu().solve(tmpu2) + tmpu3 - tmpu4 ;
+            // cout<<"u -> \n"<<u.transpose()<<endl;
+            cout<<"u size = "<<u.size()<<endl;
+            for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
+            {
+                double tmp;
+                if(u(i)<=tmp2(i))
+                    tmp = 1;
+                else
+                    tmp = 0;
+                P1(i,i) = tmp;
+            }
+            cout<<"P1 size = "<<P1.size()<<endl;
+            P1 = this->pde_param_ptr->rhopenltyput * P1;
+            for(int i=0;i<this->pde_param_ptr->Ns+1;i++)
+            {
+                double tmp;
+                if(u(i)>=tmp11(i))
+                    tmp = 1;
+                else
+                    tmp = 0;
+                P2_old(i,i) = tmp;
+            }
+            P2 = -this->pde_param_ptr->rhopenltycall * P2;
+            cout<<"P2 size = "<<P2.size()<<endl;
 
-            
-
-        //     bool sameP1=1;
-        //     for(int i=0;i<height;i++)
-        //     {
-        //         for(int j =0;j<weight;j++)
-        //         {
-        //             if (P1(i,j)!=P1_old(i,j))
-        //             {
-        //                 sameP1 = 0;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        //     bool sameP2=1;
-        //     for(int i=0;i<height;i++)
-        //     {
-        //         for(int j =0;j<weight;j++)
-        //         {
-        //             if (P2(i,j)!=P2_old(i,j))
-        //             {   
-        //                 sameP2 = 0;
-        //                 break;
-        //             }
-        //         }
-        //     }
-
-        //     bool u_flag = 1;
-        //     MatrixXd tmpuflag = (u-u_old).array().abs().array()/u.array().abs().array().max(1).array();
-        //     double maxval = tmpuflag(0);
-        //     for(int i=0;i<tmpuflag.size();i++) 
-        //     {
-        //         if(tmpuflag(i)>maxval) maxval = tmpuflag(i);
-        //     }
-        //     if (maxval < 1/0.0001) u_flag = 0;
-        //     cout<<"tmpuflag size = "<<tmpuflag.size()<<endl;
-        //     if(sameP1&&sameP2) 
-        //     {
-        //         count1++;  
-        //         break;
-        //     }
-        //     else if (u_flag)
-        //     {
-        //         count2++;
-        //         break;
-        //     }
-        //     else if(count > this->pde_param_ptr->Nt+40)
-        //     {
-        //         count4++;
-        //         cout<<"Probably does not converge, current n is "<<n<<endl;
-        //         flag = 1;
-        //         break;
-        //     }
-        //     else
-        //     { 
-        //         count3++;
-        //     }
-        //     P1_old = P1;
-        //     P2_old = P2;
             
 
-        // }
-        // cout<<"while loop OVER"<<endl;
+            bool sameP1=1;
+            for(int i=0;i<height;i++)
+            {
+                for(int j =0;j<weight;j++)
+                {
+                    if (P1(i,j)!=P1_old(i,j))
+                    {
+                        sameP1 = 0;
+                        break;
+                    }
+                }
+            }
+            bool sameP2=1;
+            for(int i=0;i<height;i++)
+            {
+                for(int j =0;j<weight;j++)
+                {
+                    if (P2(i,j)!=P2_old(i,j))
+                    {   
+                        sameP2 = 0;
+                        break;
+                    }
+                }
+            }
+
+            bool u_flag = 1;
+            MatrixXd tmpuflag = (u-u_old).array().abs().array()/u.array().abs().array().max(1).array();
+            double maxval = tmpuflag(0);
+            for(int i=0;i<tmpuflag.size();i++) 
+            {
+                if(tmpuflag(i)>maxval) maxval = tmpuflag(i);
+            }
+            if (maxval < 1/0.0001) u_flag = 0;
+            cout<<"tmpuflag size = "<<tmpuflag.size()<<endl;
+            if(sameP1&&sameP2) 
+            {
+                count1++;  
+                break;
+            }
+            else if (u_flag)
+            {
+                count2++;
+                break;
+            }
+            else if(count > this->pde_param_ptr->Nt+40)
+            {
+                count4++;
+                cout<<"Probably does not converge, current n is "<<n<<endl;
+                flag = 1;
+                break;
+            }
+            else
+            { 
+                count3++;
+            }
+            P1_old = P1;
+            P2_old = P2;
+            
+
+        }
+        cout<<"while loop OVER"<<endl;
     }
-    return 1;
-    // double Uindex = this->pde_param_ptr->Ns*this->pde_param_ptr->S0/S(S.size()-1)+1;
-    // cout<<"Uindex = "<<Uindex<<endl;
-    // double U;
-    // if(Uindex >1)
-    //     U = u(int(ceil(Uindex)))*(Uindex-floor(Uindex+0.001))+u(int(floor(Uindex)))*(ceil(Uindex+0.001)-Uindex);
-    // else 
-    //     U = u(int(ceil(Uindex)));
-    // return U;
+    
+    double Uindex = this->pde_param_ptr->Ns*this->pde_param_ptr->S0/S(S.size()-1)+1;
+    cout<<"Uindex = "<<Uindex<<endl;
+    double U;
+    if(Uindex >1)
+        U = u(int(ceil(Uindex)))*(Uindex-floor(Uindex+0.001))+u(int(floor(Uindex)))*(ceil(Uindex+0.001)-Uindex);
+    else 
+        U = u(int(ceil(Uindex)));
+    return U;
 }

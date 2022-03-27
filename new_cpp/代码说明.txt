@@ -1,0 +1,19 @@
+【使用方法】
+本文件夹中共包含3个cpp文件：Parameter.cpp、PDESolver.cpp、testConvbond.cpp。eigen-3.4.0为存储矩阵所使用的变量类型依赖库。
+函数入口main在testConvbond中。使用时先在testConvbond.cpp中设定好固定参数，固定的参数种类详见代码。
+matlab中从excel文件读入的数据，此处直接用输入流写入MatrixXd类型的变量中存储，需要直接写入的参数种类详见代码。
+
+
+
+【附加说明】
+1、程序共包含Parameter  PDESolver两个模块，eigen-3.4.0用于存储代码中所有矩阵
+
+2、计算所需的参数中有部分boundary conditions的变量需要在其他变量设定后再计算，这些变量全都放在PDESolver.cpp中进行实现。
+boundary conditions变量包括：i，S，Bc_T,Bp_T,k_T,u,Bp_T
+
+3、PDESolver.cpp中代码逻辑与matlab源码的行数对应关系：
+PDESolver.cpp          convertible_bond.m
+75-123           <-->     47-56
+161-399          <-->     63-144   
+
+【待解决问题】
