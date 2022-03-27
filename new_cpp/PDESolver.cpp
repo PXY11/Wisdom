@@ -4,6 +4,8 @@
 #include <Eigen/Dense>  //https://www.cnblogs.com/rainbow70626/p/8819119.html 使用简介
 #include <Eigen/LU>
 #include <ctime>
+#include <fstream>
+ofstream mycout("temp.txt");
 using namespace Eigen;
 using namespace std;
 
@@ -31,6 +33,38 @@ double PDESolver::interpCB(MatrixXd x,MatrixXd y,double ind)
     double ratio = (ind - x(i))/(x(i+1) - x(i));
     double res = y(i) + (y(i+1) - y(i))*ratio;
     return res;
+}
+
+
+MatrixXd PDESolver::tridiag(int n, MatrixXd a, MatrixXd b, MatrixXd c, MatrixXd u, MatrixXd r)
+{
+    //n: Size of matrix.
+    //a: Below diagonal.
+    //b：Diagonal
+    //c: Above diagonal
+    //u: return result
+    //r: right
+    int j;
+    double bet;
+    MatrixXd gam(n,1);
+    if(b(0,0)==0) throw "tridiag zero pivot";
+        u(0,0) = r(0,0)/(bet = b(0,0));
+    // cout<<"if if if "<<endl;
+    for (j=1;j<n;j++)
+    {
+        // cout<<"*******************"<<endl;
+        // cout<<j<<" c(j-1,0) = "<<c(j-1,0)<<endl;
+        gam(j,0) = c(j-1,0)/bet;
+        bet = b(j,0) - a(j,0)*gam(j,0);
+        // cout<<j<<" "<<"b(j,0) = "<<b(j,0)<<" a(j,0) = "<<a(j,0)<<" gam(j,0) = "<<gam(j,0)<<endl;
+        // cout<<j<<" bet = "<<bet<<endl;
+        if(bet==0) cout<<"bet==0 error!!!";throw " tridiag zero pivot";
+        u(j,0) = (r(j,0)-a(j,0)*u(j-1,0))/bet;
+        // cout<<"*******************"<<endl;
+    }
+    for (j=n-2;j>=0;j--)
+        u(j,0) -= gam(j+1,0)*u(j+1,0);
+    return u;
 }
 
 double PDESolver::solve()
@@ -122,7 +156,7 @@ double PDESolver::solve()
     MatrixXd u_old;
     MatrixXd P1(height,weight);
     MatrixXd P2(height,weight);
-    for(int n=1;n<5;n++)
+    for(int n=1;n<2;n++)
     {
         if(flag==1) break;
         t = n*this->pde_param_ptr->dt;
@@ -165,17 +199,21 @@ double PDESolver::solve()
         cout<<"beta size = "<<beta.size()<<endl;
         cout<<"beta 计算完毕"<<endl;        
 
-        for(int i=0;i<alpha.size();i++) alpha_MuMB(i) = alpha(i);
-        alpha_MuMB(alpha_MuMB.size()-2) = 0;
-        alpha_MuMB(alpha_MuMB.size()-1) = 0;
-        // cout<<alpha_MuMB.transpose()<<endl;
+        // for(int i=0;i<alpha.size();i++) alpha_MuMB(i+2) = alpha(i); //老师的代码需要下对角线前置位补0
+
+        for(int i=0;i<alpha.size();i++) alpha_MuMB(i) = alpha(i); //源代码需要下对角线末尾补0
+        // alpha_MuMB(alpha_MuMB.size()-2) = 0;
+        // alpha_MuMB(alpha_MuMB.size()-1) = 0;
+        cout<<"alpha_MuMB --> "<<alpha_MuMB.transpose()<<endl;
         cout<<"alpha_MuMB size = "<<alpha_MuMB.size()<<endl;
         cout<<"alpha_MuMB 计算完毕"<<endl;        
 
-        beta_MuMB(0) = 0;
-        beta_MuMB(1) = 0;
-        for(int i=0;i<beta.size();i++) beta_MuMB(i+2) = beta(i);
-        // cout<<beta_MuMB.transpose()<<endl;
+        // for(int i=0;i<beta.size();i++) beta_MuMB(i) = beta(i); //老师的代码需要上对角线末尾补0
+
+        // beta_MuMB(0) = 0; 
+        // beta_MuMB(1) = 0;
+        for(int i=0;i<beta.size();i++) beta_MuMB(i+2) = beta(i);//源代码需要上对角线前置位补0
+        cout<<"beta_MuMB --> "<<beta_MuMB.transpose()<<endl;
         cout<<"beta_MuMB size = "<<beta_MuMB.size()<<endl;
         cout<<"beta_MuMB 计算完毕"<<endl; 
 
@@ -186,7 +224,7 @@ double PDESolver::solve()
             gamma_Mu(i+1) = tmp;
         }
         // gamma_Mu.middleRows(1,2400) = -(alpha+beta+(r+this->pde_param_ptr->p*(1-this-> pde_param_ptr-> R))*this->pde_param_ptr->dt);
-        // cout<<gamma_Mu.transpose()<<endl;
+        // cout<<"gamma_Mu --> "<<gamma_Mu.transpose()<<endl;
         cout<<"gamma_Mu size = "<<gamma_Mu.size()<<endl;
         cout<<"gamma_Mu 计算完毕"<<endl; 
 
@@ -214,7 +252,7 @@ double PDESolver::solve()
             gamma_MB(i+1) = tmp;
         }
         // gamma_MB.middleRows(1,2400) = -(alpha+beta+(r+this->pde_param_ptr->p*(1-this-> pde_param_ptr-> R))*this->pde_param_ptr->dt);
-        // cout<<gamma_MB.transpose()<<endl;
+        cout<<"gamma_MB --> "<<gamma_MB.transpose()<<endl;
         cout<<"gamma_MB size = "<<gamma_MB.size()<<endl;
         cout<<"gamma_MB 计算完毕"<<endl; 
 
@@ -230,9 +268,14 @@ double PDESolver::solve()
         {
             MB(i,i-1) = alpha_MuMB(i-1);
         }
-        // cout<<MB(1,0)<<endl;
+        cout<<"MB(0,0)--> "<<MB(0,0)<<" MB(1,1)--> "<<MB(1,1)<<endl;
+        cout<<"MB(0,1)--> "<<MB(0,1)<<" MB(1,0)--> "<<MB(1,0)<<" MB(1,2)--> "<<MB(1,2)<<endl;
+        cout<<"MB(2400,2400)--> "<<MB(2400,2400)<<" MB(2399,2399)--> "<<MB(2399,2399)<<endl;
+        cout<<"MB(2400,2399)--> "<<MB(2400,2399)<<" MB(2399,2400)-->  "<<MB(2399,2400)<<endl;
         cout<<"MB size = "<<MB.size()<<endl;
         cout<<"MB 计算完毕"<<endl; 
+        mycout<<MB<<endl;
+        mycout.close();
 
         AccI = (ceil(t) - t)*this->pde_param_ptr->coupon_time_rate(int(ceil(t)))*this->pde_param_ptr->F;
         cout<<"AccI = "<<AccI<<endl;
@@ -283,8 +326,10 @@ double PDESolver::solve()
         // cout << "time use in LU composition is       " << 1000 * (clock() - time_stt) / (double)
         //     CLOCKS_PER_SEC << "ms" << endl;
         time_stt = clock();
+        // MatrixXd uuu(2401,1);
+        // B = tridiag(2401,alpha_MuMB,gamma_MB,beta_MuMB,uuu,tmp2);
         B = tmp1.partialPivLu().solve(tmp2); //用LU分解替代直接求逆 方法参考 http://www.javashuo.com/article/p-fjkcsfmi-ey.html
-        // cout<<B.transpose()<<endl;
+        cout<<"B --> "<<B.transpose()<<endl;
         cout << "time use in LU composition is       " << 1000 * (clock() - time_stt) / (double)
             CLOCKS_PER_SEC << "ms" << endl;
         cout<<"B size = "<<B.size()<<endl;

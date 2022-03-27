@@ -73,24 +73,34 @@ int main()
     MatrixXd u(n,1);
     MatrixXd r(n,1);
 
-    a<<0,6,31,2,1; //a: Below diagonal. 前段补0
-    b<<1,2,3,4,5;
-    // b<<1,2,3,4,0;
-    c<<13,7,9,7,0;  //c: Above diagonal 末尾补0
+    // a<<0,6,31,2,1; //a: Below diagonal. 下对角线前段补0
+    a<<0,0,31,2,1; //a: Below diagonal. 下对角线前段补0
+    // b<<1,2,3,4,5;
+    b<<1,2,3,4,0;
+    // c<<13,7,9,7,0;  //c: Above diagonal 上对角线末尾补0
+    c<<13,7,9,0,0;  //c: Above diagonal 上对角线末尾补0
     r<<7,8,2,9,12;
     cout<<"Below diagonal a = \n"<<a.transpose()<<endl;
     cout<<"diagonal b = \n"<<b.transpose()<<endl;
     cout<<"Above diagonal c = \n"<<c.transpose()<<endl;
     cout<<"r = \n"<<r.transpose()<<endl;
-    MatrixXd res = tridiag( n,  a,  b,  c,  u,  r);
-    cout<<"tridiag res = \n"<<res.transpose()<<endl;
+    // MatrixXd res = tridiag( n,  a,  b,  c,  u,  r);
+    // cout<<"tridiag res = \n"<<res.transpose()<<endl;
     MatrixXd mat(n,n);
-    mat<<1,13,0,0,0,
-    0,2,7,0,0,
+    // mat<<\
+    // 1,13,0,0,0,
+    // 6,2,7,0,0,
+    // 0,31,3,9,0,
+    // 0,0,2,4,7,
+    // 0,0,0,1,5;
+    mat<<\
+    1,0,0,0,0,
+    6,2,7,0,0,
     0,31,3,9,0,
-    0,0,2,4,0,
-    0,0,0,1,0;
+    0,0,2,4,7,
+    0,0,0,0,0;
     cout<<"mat = \n"<<mat<<endl;
+    cout<<"mat inverse = \n"<<mat.inverse()<<endl;
     cout<<"mat^(-1)*r = \n"<<(mat.inverse()*r).transpose()<<endl;
     cout<<"LU res = \n"<< mat.partialPivLu().solve(r).transpose()<<endl;
 }
