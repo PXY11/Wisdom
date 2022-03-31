@@ -2,14 +2,13 @@
 本文件夹中共包含3个cpp文件：Parameter.cpp、PDESolver.cpp、testConvbond.cpp。eigen-3.4.0为存储矩阵所使用的变量类型依赖库。
 函数入口main在testConvbond中。使用时先在testConvbond.cpp中设定好固定参数，固定的参数种类详见代码。
 matlab中从excel文件读入的数据，此处直接用输入流写入MatrixXd类型的变量中存储，需要直接写入的参数种类详见代码。
-
-
+编译命令以及参考的资料网址放在README中
 
 【附加说明】
 1、程序共包含Parameter  PDESolver两个模块，eigen-3.4.0用于存储代码中所有矩阵
 
 2、计算所需的参数中有部分boundary conditions的变量需要在其他变量设定后再计算，这些变量全都放在PDESolver.cpp中进行实现。
-boundary conditions变量包括：i，S，Bc_T,Bp_T,k_T,u,Bp_T
+这些变量包括：i，S，Bc_T,Bp_T,k_T,u,Bp_T
 
 3、PDESolver.cpp中代码逻辑与matlab源码的行数对应关系：
 PDESolver.cpp          convertible_bond.m
@@ -18,6 +17,15 @@ PDESolver.cpp          convertible_bond.m
 
 4、matlab代码在计算过程中新产生的变量，在C++中全部需要预先定义，PDESolveer.cpp的126-158行中定义了这些变量
 
+
 【待解决问题】
 矩阵求逆速度问题，PDESolver.cpp中共有3处代码涉及矩阵求逆运算，分别为332，363,463行，对应convertible_bond.m中的129,134,150行。
-
+在使用tridiag求逆过程中，输入形如 
+1,0,0,0,0
+6,2,1,0,0
+0,9,3,5,0
+0,0,7,4,5
+0,0,0,0,0
+的矩阵会报错，该矩阵主对角线末位为0，上对角线首位为0，下对角线末位为0。对应PDESolver.cpp 中的稀疏对角矩阵MB，
+MB的主对角线为gamma_MB (2401x1) , 上对角线为beta_MuMB (2401x1) ,下对角线为alpha_MuMB (2401x1)，
+类似MB的稀疏对角矩阵还有Mu，MB的定义在matlab源代码的107行，Mu的定义在103行
